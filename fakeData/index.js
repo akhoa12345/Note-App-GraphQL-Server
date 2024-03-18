@@ -1,11 +1,11 @@
 export default {
-  author: [
+  authors: [
     {
-      id: 1,
+      id: 143,
       name: 'Anh Khoa'
     },    
     {
-      id: 2,
+      id: 298,
       name: 'Hồ Xuân Hương'
     }    
   ],
@@ -15,19 +15,19 @@ export default {
       id: 1,
       name: 'Home',
       createdAt: '2024-03-14T03:42:13Z',
-      authorId: 1,
+      authorId: 143,
     },
     {
       id: 2,
       name: 'New Folder',
       createdAt: '2024-02-14T03:42:13Z',
-      authorId: 1,
+      authorId: 143,
     },
     {
       id: 3,
       name: 'Work',
       createdAt: '2024-01-14T03:42:13Z',
-      authorId: 2,
+      authorId: 298,
     },
   ]
 }
