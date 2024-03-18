@@ -6,6 +6,8 @@ import { ApolloServer } from '@apollo/server'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import { expressMiddleware } from '@apollo/server/express4'
 
+import fakeData from './fakeData/index.js'
+
 const app = express()
 const httpServer = http.createServer(app)
 
@@ -14,6 +16,7 @@ const typeDefs = `#graphql
     id: String,
     name: String,
     createdAt: String,
+    author: Author
   }
 
   type Author {
@@ -27,7 +30,7 @@ const typeDefs = `#graphql
 `
 const resolvers = {
   Query: {
-    name: () => { return '123 alo' }
+    folders: () => { return fakeData.folders}
   }
 }
 
