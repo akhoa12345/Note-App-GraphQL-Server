@@ -38,10 +38,10 @@ export const resolvers = {
       return newFolder
     },
     register: async (parent, args) => {
-      const foundUser = await AuthorModel.find({ uid: args.uid })
+      const foundUser = await AuthorModel.findOne({ uid: args.uid })
 
       if (!foundUser) {
-        const newUser = await AuthorModel.create(args)
+        const newUser = await AuthorModel.create({ uid: args.uid, name: args.name })
         return newUser
       }
 
