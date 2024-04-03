@@ -7,6 +7,8 @@ export const resolvers = {
     folders: async (parent, args, context, info) => { 
       const folders = await FolderModel.find({
         authorId: context.uid
+      }).sort({
+        updatedAt: 'desc'
       })
       console.log({context})
       return folders
@@ -24,17 +26,18 @@ export const resolvers = {
     }
   },
   Folder: {
-    author: (parent, args, context, info) => { 
+    author: async (parent, args, context, info) => { 
       const authorId = parent.authorId
-      return fakeData.authors.find(author => author.id === authorId)
+      const author = await AuthorModel.findOne({ uid: authorId })
+      return author
     },
     notes: (parent, args, context, info) => {
       return fakeData.notes.filter(note => note.folderId === parent.id)
     }
   },
   Mutation: {
-    addFolder: async (parent, args) => {
-      const newFolder = await FolderModel.create({name: args.name, authorId: 1})
+    addFolder: async (parent, args, context) => {
+      const newFolder = await FolderModel.create({name: args.name, authorId: context.uid})
       return newFolder
     },
     register: async (parent, args) => {
