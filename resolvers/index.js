@@ -1,6 +1,7 @@
 import fakeData from '../fakeData/index.js'
 import FolderModel from '../models/FolderModel.js'
 import AuthorModel from '../models/AuthorModel.js'
+import NoteModel from '../models/NoteModel.js'
 
 export const resolvers = {
   Query: {
@@ -20,9 +21,12 @@ export const resolvers = {
       })
       return foundFolder
     },
-    note: (parent, args) => {
+    note: async (parent, args) => {
       const noteId = args.noteId
-      return fakeData.notes.find(note => note.id === noteId)
+      const foundNote = await NoteModel.findOne({
+        _id: noteId
+      })
+      return foundNote
     }
   },
   Folder: {
@@ -31,8 +35,9 @@ export const resolvers = {
       const author = await AuthorModel.findOne({ uid: authorId })
       return author
     },
-    notes: (parent, args, context, info) => {
-      return fakeData.notes.filter(note => note.folderId === parent.id)
+    notes: async (parent, args, context, info) => {
+      const notes = await NoteModel.find({ folderId: parent._id })
+      return notes
     }
   },
   Mutation: {
@@ -49,6 +54,10 @@ export const resolvers = {
       }
 
       return foundUser
+    },
+    addNote: async (parent, args, context) => {
+      const newNote = await NoteModel.create(args)
+      return newNote
     }
   }
 }
