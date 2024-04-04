@@ -36,7 +36,9 @@ export const resolvers = {
       return author
     },
     notes: async (parent, args, context, info) => {
-      const notes = await NoteModel.find({ folderId: parent._id })
+      const notes = await NoteModel.find({ folderId: parent._id }).sort({
+        updatedAt: 'desc'
+      })
       return notes
     }
   },
@@ -58,6 +60,11 @@ export const resolvers = {
     addNote: async (parent, args, context) => {
       const newNote = await NoteModel.create(args)
       return newNote
+    },
+    updateNote: async (parent, args, context) => {
+      const noteId = args.id
+      const updateNote = await NoteModel.findByIdAndUpdate(noteId, args)
+      return updateNote
     }
   }
 }
