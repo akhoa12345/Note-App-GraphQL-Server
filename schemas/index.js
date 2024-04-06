@@ -31,5 +31,15 @@ export const typeDefs = `#graphql
     register(uid: String!, name: String!): Author 
     addNote(content: String!, folderId: ID!): Note
     updateNote(id: String!, content: String!): Note
+    pushNotification(content: String): Message 
+  }
+
+  type Message {
+    message: String
+  }
+
+  type Subscription {
+    folderCreated: Message,
+    notification: Message
   }
 `
